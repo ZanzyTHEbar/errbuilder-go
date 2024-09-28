@@ -36,6 +36,13 @@ jobs:
           GOOS: ${{ matrix.goos }}
           GOARCH: ${{ matrix.goarch }}
 
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+
+    needs: build
+
+    steps:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
