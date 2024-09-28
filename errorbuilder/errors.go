@@ -63,3 +63,4 @@ func NotFoundErr(err error) error {
 		WithMsg("Not Found").
 		WithCause(err)
 }
+

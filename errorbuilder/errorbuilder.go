@@ -12,20 +12,20 @@ import (
 )
 
 type ErrDetails struct {
-	errors ErrorMap
+	Errors ErrorMap `json:"errors"`
 }
 
 type ErrBuilder struct {
-	code    Code
-	msg     string
-	cause   error
-	label   string
-	details ErrDetails
+	Code    ErrCode    `json:"code"`
+	Msg     string     `json:"message"`
+	Cause   error      `json:"Cause"`
+	Label   string     `json:"label"`
+	Details ErrDetails `json:"details"`
 }
 
 // NewErrDetails is a constructor for ErrDetails
 func NewErrDetails(errors ErrorMap) ErrDetails {
-	return ErrDetails{errors: errors}
+	return ErrDetails{Errors: errors}
 }
 
 // NewErrBuilder is a constructor for ErrBuilder
@@ -37,11 +37,11 @@ func NewErrBuilder() *ErrBuilder {
 func (builder *ErrBuilder) MarshalJSON() ([]byte, error) {
 	// use json.Marshal to convert the error message to a JSON byte slice
 	byteBuffer, err := json.Marshal(map[string]interface{}{
-		"code":    builder.code,
-		"message": builder.msg,
-		"cause":   builder.cause.Error(),
-		"label":   builder.label,
-		"details": builder.details,
+		"code":    builder.Code,
+		"message": builder.Msg,
+		"Cause":   builder.Cause.Error(),
+		"label":   builder.Label,
+		"details": builder.Details,
 	})
 	if err != nil {
 		return nil, err
@@ -54,72 +54,72 @@ func (builder *ErrBuilder) MarshalJSON() ([]byte, error) {
 func (builder *ErrBuilder) Error() string {
 
 	// validate the error instance, if it is nil, return nil
-	if builder.code == 0 || builder.msg == "" {
-		builder.code = CodeInternal
-		builder.msg = "Internal Server Error"
+	if builder.Code == 0 || builder.Msg == "" {
+		builder.Code = CodeInternal
+		builder.Msg = "Internal Server Error"
 	}
 
-	// if the cause is nil, set the cause to the error message
-	if builder.cause == nil {
-		builder.cause = errors.New(builder.msg)
+	// if the Cause is nil, set the Cause to the error message
+	if builder.Cause == nil {
+		builder.Cause = errors.New(builder.Msg)
 	}
 
 	// if the label is empty, set the label to the String of the error code
-	if builder.label == "" {
-		builder.label = builder.code.String()
+	if builder.Label == "" {
+		builder.Label = builder.Code.String()
 	}
 
 	// convert the builder instance to a formatted error message and return it
-	return fmt.Sprintf("code: %d, label: %s, message: %s, cause: %s, details: %v",
-		builder.code, builder.label, builder.msg, builder.cause.Error(), builder.details)
+	return fmt.Sprintf("code: %d, label: %s, message: %s, Cause: %s, details: %v",
+		builder.Code, builder.Label, builder.Msg, builder.Cause.Error(), builder.Details)
 }
 
 // WithCode is a method to set the error code.
-func (builder *ErrBuilder) WithCode(code Code) *ErrBuilder {
-	builder.code = code
+func (builder *ErrBuilder) WithCode(code ErrCode) *ErrBuilder {
+	builder.Code = code
 	return builder
 }
 
 // WithLabel is a method to set the error label.
 func (builder *ErrBuilder) WithLabel(label string) *ErrBuilder {
-	builder.label = label
+	builder.Label = label
 	return builder
 }
 
 // WithMsg is a method to set the error message.
 func (builder *ErrBuilder) WithMsg(msg string) *ErrBuilder {
-	builder.msg = msg
+	builder.Msg = msg
 	return builder
 }
 
-// WithCause is a method to set the error cause.
-func (builder *ErrBuilder) WithCause(cause error) *ErrBuilder {
-	builder.cause = cause
+// WithCause is a method to set the error Cause.
+func (builder *ErrBuilder) WithCause(Cause error) *ErrBuilder {
+	builder.Cause = Cause
 	return builder
 }
 
 // WithDetails is a method to set the error details.
 func (builder *ErrBuilder) WithDetails(details ErrDetails) *ErrBuilder {
-	builder.details = details
+	builder.Details = details
 	return builder
 }
 
 // Code returns the error's status code.
-func (err *ErrBuilder) Code() Code {
-	return err.code
+func (err *ErrBuilder) ErrCode() ErrCode {
+	return err.Code
 }
 
 // Unwrap allows [errors.Is] and [errors.As] access to the underlying error.
 func (err *ErrBuilder) Unwrap() error {
-	return err.cause
+	return err.Cause
 }
 
 // UnWrap is a method to return the error details as a map of errors.
 func (err *ErrDetails) UnWrap() (ErrorMap, error) {
-	if err.errors == nil {
+	if err.Errors == nil {
 		return nil, errors.New("no error details found")
 	}
-	return err.errors, nil
+	return err.Errors, nil
 }
 
 // asErrorBuilder converts the given error to an ErrBuilder.
@@ -139,7 +139,7 @@ func asErrorBuilder(err error) (*ErrBuilder, bool) {
 
 // errorf calls fmt.Errorf with the supplied template and arguments, then wraps
 // the resulting error.
-func errorf(c Code, template string, args ...any) *ErrBuilder {
+func errorf(c ErrCode, template string, args ...any) *ErrBuilder {
 	return NewErrBuilder().
 		WithCause(fmt.Errorf(template, args...)).
 		WithCode(c)

@@ -6,80 +6,80 @@ import (
 	"strings"
 )
 
-type Code uint32
+type ErrCode uint32
 
 const (
 
 	// CodeCanceled indicates that the operation was canceled, typically by the
 	// caller.
-	CodeCanceled Code = 1
+	CodeCanceled ErrCode = 1
 
 	// CodeUnknown indicates that the operation failed for an unknown reason.
-	CodeUnknown Code = 2
+	CodeUnknown ErrCode = 2
 
 	// CodeInvalidArgument indicates that client supplied an invalid argument.
-	CodeInvalidArgument Code = 3
+	CodeInvalidArgument ErrCode = 3
 
 	// CodeDeadlineExceeded indicates that deadline expired before the operation
 	// could complete.
-	CodeDeadlineExceeded Code = 4
+	CodeDeadlineExceeded ErrCode = 4
 
 	// CodeNotFound indicates that some requested entity (for example, a file or
 	// directory) was not found.
-	CodeNotFound Code = 5
+	CodeNotFound ErrCode = 5
 
 	// CodeAlreadyExists indicates that client attempted to create an entity (for
 	// example, a file or directory) that already exists.
-	CodeAlreadyExists Code = 6
+	CodeAlreadyExists ErrCode = 6
 
 	// CodePermissionDenied indicates that the caller doesn't have permission to
 	// execute the specified operation.
-	CodePermissionDenied Code = 7
+	CodePermissionDenied ErrCode = 7
 
 	// CodeResourceExhausted indicates that some resource has been exhausted. For
 	// example, a per-user quota may be exhausted or the entire file system may
 	// be full.
-	CodeResourceExhausted Code = 8
+	CodeResourceExhausted ErrCode = 8
 
 	// CodeFailedPrecondition indicates that the system is not in a state
 	// required for the operation's execution.
-	CodeFailedPrecondition Code = 9
+	CodeFailedPrecondition ErrCode = 9
 
 	// CodeAborted indicates that operation was aborted by the system, usually
 	// because of a concurrency issue such as a sequencer check failure or
 	// transaction abort.
-	CodeAborted Code = 10
+	CodeAborted ErrCode = 10
 
 	// CodeOutOfRange indicates that the operation was attempted past the valid
 	// range (for example, seeking past end-of-file).
-	CodeOutOfRange Code = 11
+	CodeOutOfRange ErrCode = 11
 
 	// CodeUnimplemented indicates that the operation isn't implemented,
 	// supported, or enabled in this service.
-	CodeUnimplemented Code = 12
+	CodeUnimplemented ErrCode = 12
 
 	// CodeInternal indicates that some invariants expected by the underlying
 	// system have been broken. This code is reserved for serious errors.
-	CodeInternal Code = 13
+	CodeInternal ErrCode = 13
 
 	// CodeUnavailable indicates that the service is currently unavailable. This
 	// is usually temporary, so clients can back off and retry idempotent
 	// operations.
-	CodeUnavailable Code = 14
+	CodeUnavailable ErrCode = 14
 
 	// CodeDataLoss indicates that the operation has resulted in unrecoverable
 	// data loss or corruption.
-	CodeDataLoss Code = 15
+	CodeDataLoss ErrCode = 15
 
 	// CodeUnauthenticated indicates that the request does not have valid
 	// authentication credentials for the operation.
-	CodeUnauthenticated Code = 16
+	CodeUnauthenticated ErrCode = 16
 
 	minCode = CodeCanceled
 	maxCode = CodeUnauthenticated
 )
 
-func (c Code) String() string {
+func (c ErrCode) String() string {
 	switch c {
 	case CodeCanceled:
 		return "canceled"
@@ -118,12 +118,12 @@ func (c Code) String() string {
 }
 
 // MarshalText implements [encoding.TextMarshaler].
-func (c Code) MarshalText() ([]byte, error) {
+func (c ErrCode) MarshalText() ([]byte, error) {
 	return []byte(c.String()), nil
 }
 
 // UnmarshalText implements [encoding.TextUnmarshaler].
-func (c *Code) UnmarshalText(data []byte) error {
+func (c *ErrCode) UnmarshalText(data []byte) error {
 	dataStr := string(data)
 	switch dataStr {
 	case "canceled":
@@ -181,7 +181,7 @@ func (c *Code) UnmarshalText(data []byte) error {
 		dataStr = strings.TrimPrefix(dataStr, "code_")
 		code, err := strconv.ParseInt(dataStr, 10 /* base */, 64 /* bitsize */)
 		if err == nil && (code < int64(minCode) || code > int64(maxCode)) {
-			*c = Code(code)
+			*c = ErrCode(code)
 			return nil
 		}
 	}
@@ -190,9 +190,9 @@ func (c *Code) UnmarshalText(data []byte) error {
 
 // CodeOf returns the error's status code if it is or wraps an [*ErrBuilder] and
 // [CodeUnknown] otherwise.
-func CodeOf(err error) Code {
+func CodeOf(err error) ErrCode {
 	if errBuilder, ok := asErrorBuilder(err); ok {
-		return errBuilder.Code()
+		return errBuilder.ErrCode()
 	}
 	return CodeUnknown
 }
