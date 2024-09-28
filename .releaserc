@@ -148,8 +148,8 @@
         [
             "@semantic-release/exec",
             {
-                "prepareCmd": "",
-                "publishCmd": ""
+                "prepareCmd": "echo \"Preparing release ${nextRelease.version}\"",
+                "publishCmd": "echo \"Publishing release ${nextRelease.version}\""
             }
         ],
         [
