@@ -7,4 +7,3 @@ The purpose of this library was to make a standard way of creating errors in my 
 I wanted to have a way to create errors with a custom metadata. I also wanted to have a way to create a map of errors that I could use to store errors for building validation logic.
 
 This is a general purpose library that can be used in any Go project. Please check out the [`examples`](/examples) directory for more information.
-
