@@ -10,3 +10,4 @@ ifeq ($(filter -v,${GOARGS}),)
 endif
 TEST_FORMAT = short-VERBOSE
 endif
+
