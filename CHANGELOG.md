@@ -3,6 +3,16 @@
 [![semantic versioning](https://img.shields.io/badge/semantic%20versioning-2.0.0-green.svg)](https://semver.org)
 > All notable changes to this project will be documented in this file
 
+## [1.1.0](https://github.com/ZanzyTHEbar/errbuilder-go/compare/v1.0.0...v1.1.0) (2024-09-28)
+
+### 🍕 Features
+
+* add release job to CI workflow ([d861eef](https://github.com/ZanzyTHEbar/errbuilder-go/commit/d861eef12f61508f391216552196792166b36509))
+
+### 🔁 Continuous Integration
+
+* **ci-fix:** add checkout to release step to allow proper release cycle ([48a7c29](https://github.com/ZanzyTHEbar/errbuilder-go/commit/48a7c2922f444f161c1fc10ac2f2f2ee8cc59b42))
+
 ## 1.0.0 (2024-09-28)
 
 ### 🍕 Features
