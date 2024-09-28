@@ -1,4 +1,4 @@
-package errsx
+package errbuilder
 
 import (
 	"context"
