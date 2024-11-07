@@ -43,6 +43,13 @@ func ValidationErr(errors ErrorMap) error {
 		WithDetails(NewErrDetails(errors))
 }
 
+func GenericErr(msg string, err error) error {
+	return NewDesktopCleanerErrBuilder().
+		WithCode(CodeInternal).
+		WithMsg(msg).
+		WithCause(err)
+}
+
 func InternalServerErr(err error) error {
 	return NewErrBuilder().
 		WithCode(CodeInternal).
