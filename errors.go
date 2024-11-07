@@ -44,7 +44,7 @@ func ValidationErr(errors ErrorMap) error {
 }
 
 func GenericErr(msg string, err error) error {
-	return NewDesktopCleanerErrBuilder().
+	return NewErrBuilder().
 		WithCode(CodeInternal).
 		WithMsg(msg).
 		WithCause(err)
