@@ -18,9 +18,9 @@ This is a general purpose library that can be used in any Go project.
 - **Error Codes**: A rich set of error codes, with an interface, for defining the type of error. Follows the gRPC error code specification.
 - **Error Map**: An optional and dynamic map to contain error messages for complex control flows, perhaps even deferred error handling.
 - **Error Details**: Custom ErrDetails type that allows providing extra data to be JSON (or other type) formatted into the error message.
-- **Builtin Custom Error wrappers**: (errors.go)[/errors.go] contains 5 builtin error functions that demonstrate how to use the errbuilder, and are provided for common error usage requirements.
+- **Builtin Custom Error wrappers**: [errors.go](/errors.go) contains 5 builtin error functions that demonstrate how to use the errbuilder, and are provided for common error usage requirements.
 
-Works very well with my (assert-lib)[https://github.com/ZanzyTHEbar/assert-lib] library.
+Works very well with my [assert-lib](https://github.com/ZanzyTHEbar/assert-lib) library.
 
 ## Installation
 
