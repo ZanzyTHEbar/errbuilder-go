@@ -3,6 +3,12 @@
 [![semantic versioning](https://img.shields.io/badge/semantic%20versioning-2.0.0-green.svg)](https://semver.org)
 > All notable changes to this project will be documented in this file
 
+## [1.3.0](https://github.com/ZanzyTHEbar/errbuilder-go/compare/v1.2.0...v1.3.0) (2025-02-17)
+
+### 📝 Documentation
+
+* Update README.md ([3683037](https://github.com/ZanzyTHEbar/errbuilder-go/commit/3683037e61fd54d97417f72fe448fe000042601a))
+
 ## [1.2.0](https://github.com/ZanzyTHEbar/errbuilder-go/compare/v1.1.1...v1.2.0) (2024-11-07)
 
 ### 🍕 Features
