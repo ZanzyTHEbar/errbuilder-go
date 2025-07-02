@@ -37,35 +37,35 @@ package errbuilder
 //			return c.SendStatus(http.StatusOK)
 //	})
 func ValidationErr(errors ErrorMap) error {
-	return NewErrBuilder().
+	return New().
 		WithCode(CodeInvalidArgument).
 		WithMsg("Bad Request").
 		WithDetails(NewErrDetails(errors))
 }
 
 func GenericErr(msg string, err error) error {
-	return NewErrBuilder().
+	return New().
 		WithCode(CodeInternal).
 		WithMsg(msg).
 		WithCause(err)
 }
 
 func InternalServerErr(err error) error {
-	return NewErrBuilder().
+	return New().
 		WithCode(CodeInternal).
 		WithMsg("Internal Server Error").
 		WithCause(err)
 }
 
 func UnauthorizedErr(err error) error {
-	return NewErrBuilder().
+	return New().
 		WithCode(CodeUnauthenticated).
 		WithMsg("Unauthorized").
 		WithCause(err)
 }
 
 func NotFoundErr(err error) error {
-	return NewErrBuilder().
+	return New().
 		WithCode(CodeNotFound).
 		WithMsg("Not Found").
 		WithCause(err)
